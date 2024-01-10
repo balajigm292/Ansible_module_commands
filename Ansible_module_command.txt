@@ -1,0 +1,86 @@
+Establish connection of slave node:-
+
+ssh 172.31.5.158
+    2  ssh-keygen
+    3  ssh-copy-id ansible@172.31.5.158
+    4  ssh 172.31.5.158
+
+To know connection:-
+
+    5  ansible demo -m ping
+
+To install httpd task:-
+
+    6  ansible demo -b -a "yum install httpd"
+    7  ansible demo -b -a "which httpd"
+    8  ansible demo -b -m yum -a "pkg=httpd state=present"
+    9  ansible demo -b -m service -a "name=httpd state=started"
+   10  ansible demo -b -m command -a "systemctl status httpd"
+   11  ansible demo -b -m service -a "name=httpd state=stopped"
+   12  ansible demo -b -m yum -a "pkg=httpd state=absent"
+
+To create user:-
+
+   13  ansible demo -b -m user -a "name=balaji state=present"
+To know user created
+   14  ansible demo -b -m user -a "cat/etc/passwd
+   15  ansible demo -b -m user -a "cat/etc/passwd"
+To remove user:-
+
+   16  ansible demo -b -m user -a "name=balaji state=absent"
+To create user group:-
+
+   17  ansible demo -b -m group -a "name=DevOps state=present"
+
+To know user group created
+
+   18  ansible demo -b -a "cat/etc/group"
+   19  ansible demo -b -a "cat /etc/group"
+
+To remove user group:-
+
+   20  ansible demo -b -m group -a "name=DevOps state=absent"
+
+To create directory:-
+
+   21  ansible demo -b -m file -a "path=/home/ansible/demo state=directory"
+
+To remove directory:-
+
+   22  ansible demo -b -m file -a "path=/home/ansible/demo state=absent"
+
+To create directory with permission:-
+
+   23  ansible demo -b -m file -a "path=/home/ansible/demo state=directory mode=0755"
+
+To remove directory with permission:-
+
+   24  ansible demo -b -m file -a "path=/home/ansible/demo state=absent mode=0755"
+
+To create file:-
+
+   25  ansible demo -b -m file -a "path=/home/ansible/jsp.txt state=touch"
+
+To remove file
+  
+ 26  ansible demo -b -m file -a "path=/home/ansible/jsp.txt state=absent"
+
+To create file with permission:-
+
+
+   27  ansible demo -b -m file -a "path=/home/ansible/jsp.txt state=touch mode=0755"
+
+To remove file with permission:-
+
+
+   28  ansible demo -b -m file -a "path=/home/ansible/jsp.txt state=absent mode=0755"
+  
+
+  To create file mater node:-
+ 
+  33  touch jsp.txt
+
+To copy file from master to slave:-
+
+   34  ansible demo -b -m copy -a "src=/home/ansible/jsp.txt dest=/home/ansible"
+   35  history
