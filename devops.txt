@@ -1,0 +1,631 @@
+  autoscalling
+template:-
+
+#!/bin/bash                                                                                                                      
+yum update -y
+yum install -y httpd
+systemctl start httpd
+systemctl enable httpd
+EC2AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+echo '<center><h1>This Amazon EC2 instance is located in this Availability Zone: AZID </h1></center>' > /var/www/html/index.txt
+sed "s/AZID/$EC2AZ/" /var/www/html/index.txt > /var/www/html/index.html
+
+loadbalancere:-
+
+#!/bin/bash                                                                                                                      
+yum update -y
+yum install -y httpd
+systemctl start httpd
+systemctl enable httpd
+echo "<center><h1>Ec2 Instance is Running with WebApp </h1></center>" > /var/www/html/index.html
+
+git commands 06/12/2023
+ 
+git init                                             
+ls                                                  
+vi sample.txt
+cat sample.txt
+git status
+git add .
+git status
+git commit -m "m1"
+git log
+vi sample.txt
+cat sample.txt
+git status
+git add .
+git status
+git commit -m "m2"
+git remote -v
+git remote add origin <github-url>
+git remote -v
+git push origin master
+git push origin master
+ls
+cat sample.txt
+echo "m3" >> sample.txt
+cat sample.txt
+git add .
+git commit -m "m3"
+git log
+echo "bugs" >> sample.txt
+cat sample.txt
+git status
+git add .
+git status
+git status
+git reset sample.txt
+git status
+cat sample.txt
+git checkout sample.txt
+cat sample.txt
+echo "m4" >> sample.txt
+cat sample.txt
+git add .
+git commit -m "m4"
+git log
+git log
+git log --oneline
+echo "error" >> sample.txt
+git add .
+git commit -m "m5"
+git log --oneline
+cat sample.txt
+git reset --hard HEAD~1
+git log --oneline
+cat sample.txt
+ ls
+cat sample.txt
+echo "m5" >> sample.txt
+git add .
+git commit -m "m5"
+git log --oneline
+git diff master origin/master
+git diff origin/master master
+git log --oneline
+cat sample.txt
+git reset --soft HEAD~1
+git log --oneline
+cat sample.txt
+git log --oneline
+git reset --hard HEAD~1
+cat sample.txt
+git log --oneline
+echo "m4" >> sample.txt
+git add .
+git commit -m "m4"
+echo "m5" >> sample.txt
+git add .
+git commit -m "m5"
+git log --oneline
+cat sample.txt
+git revert 8cbbaff
+git log --oneline
+git branch
+git branch -r
+git branch teamA
+git switch teamA
+git merge teamA
+git checkout master
+git checkout -b teamB
+git branch -d or -D teamB
+git push origin --delete teamA
+git clone url of github
+git tag v1.4
+git tag v1.3 commit id
+git push origin v1.4
+git push --tags
+touch s.html s1.html s.js d.js
+vi .gitignore
+* .html
+.gitignore
+ls -a
+
+
+           
+
+
+09/12/2023
+docker installation:-
+
+sudo yum update -y
+sudo yum search docker
+sudo yum info docker
+sudo yum install -y docker
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+sudo systemctl status docker.service
+docker --version
+sudo yum install git -y
+sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+docker install every time
+
+sudo yum install git -y
+sudo su -
+vi sample.sh
+
+task 1:-
+ pull one httpd image and run the container
+        
+        vi s.sh
+    2  sh s.sh
+    3  docker pull httpd
+    4  docker run -it -d httpd
+    5  docker ps
+    6  docker images
+    7  docker stop c1af4fe48d48
+    8  docker rm c1af4fe48d48
+    9  docker rmi httpd
+   10  history
+
+task 2:-
+ pull one httpd image and run the container and take snapshot and push to docker hub
+    
+3  docker pull httpd
+    4  docker ps
+    5  docker commit
+    6  docker commit b82c5eb94e82 balajigm292/demo1
+    7  docker images
+    8  docker login
+    9  docker push balajigm292/demo1
+   10  history
+
+task3 :-
+pull one webserver(nginx)run a container host in a chrome tab
+
+    3  docker pull nginx
+    4  docker images
+    5  docker run -it -d -p 8000:80 nginx
+    6  history
+type the ip address of instance :8000 in chrome
+
+task 4:-
+ pull one amazonlinux image and run the container and install apache in container
+
+   1 docker pull amazonlinux
+   2 docker run -it -d amazonlinux
+   3 docker ps
+   4 docker exec -it bbbee6d61054 /bin/bash       
+   5 yum install wget -y
+   6 wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.84/bin/apache-tomcat-9.0.84.tar.gz
+   7 yum install tar -y
+   8  yum install -y gzip
+   9  ls
+   10 tar zxvf apache-tomcat-9.0.84.tar.gz
+   11  ls
+   12  cd apache-tomcat-9.0.84
+    13  ls
+   14  cd bin/
+   15  ls
+   16  yum install java -y
+   17  sh startup.sh
+   18  history
+ 
+task 5:-dockerfile(customized image)
+
+FROM amazonlinux
+
+MAINTAINER "balajigm292@gmail.com"
+
+RUN yum update -y
+
+RUN yum install -y wget
+
+RUN yum install -y tar
+
+RUN yum install -y gzip
+
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.84/bin/apache-tomcat-9.0.84.tar.gz
+RUN tar zxvf apache-tomcat-9.0.84.tar.gz
+
+RUN yum install -y java
+
+RUN sh apache-tomcat-9.0.84/bin/startup.sh
+
+
+    1 vi do.sh
+    2  sh do.sh
+    3  mkdir Dockerdirectory
+    4  ls
+    5  cd Dockerdirectory
+    6  vi dockerfile
+    7  cd ..
+   8  docker build -t balajigm292/demo Dockerdirectory/
+   9 docker images
+  10  docker run -it -d balajigm292/demo
+   11  docker ps
+   12  docker exec -it 370b16ef23b2 /bin/bash
+    13 ls
+    14  cd apache-tomcat-9.0.84
+    15  ls
+    16  cd bin/
+    17  ls
+    18  sh startup.sh
+    19  history
+
+task 6:- (docker compose)
+run multiple containers as single service
+
+version: '3'
+services:
+   web:
+        image: nginx
+        ports:
+           -  "8000:80"
+    db:
+       image: redis
+1 vi docker-compose.yml
+2 docker-compose up
+3 docker-compose down
+4 docker rmi nginx redis
+5 rm docker-compose.yml
+
+task7:-(volumes)
+
+
+LINUX COMMANDS
+
+1  yum update -y
+    2  ls
+    3  ls -l
+    4  ls
+    5  ls -a
+    6  ls -al
+    7  touch a.txt b.txt c.txt
+    8  vi d.txt
+    9  rm d.txt
+   10  ls
+   11  rm c.txt
+   12  ls
+   13  pwd
+   14  date
+   15  cal
+   16  nano c.txt
+   17  cat >> c.txt
+   18  cat c.txt
+   19  nano d.txt
+   20  cat d.txt
+   21  cat >> d.txt
+   22  cat d.txt
+   23  cat > d.txt
+   24  mkdir sample
+   25  cd sample
+   26  c ..
+   27  cd ..
+   28  rmdir -rf sample
+   29  rm -rf sample/
+   30  ls
+   31  ~
+   32  /
+   33  mkdir sample
+   34  cp d.txt sample/
+   35  cd sample
+   36  ls
+   37  cat d.txt
+   38  cd ..
+   39  rm -rf d.txt
+   40  ls
+   41   mv sample/a.txt ./
+   42  cd sample
+   43  
+   45  cd ..
+   46  ls
+   47   
+   48  cd sample
+   49  ls
+   50   
+   54  uname  
+   55  uname -o
+   56  uname -r
+   57  uname -v
+   58  uname -m
+   59  uname -a
+   60  history
+   61  whoami
+   62  ls
+   63  chmod 777
+   64  chmod 777 e.txt
+   65  chmod u=rx,g+w,o+x e.txt
+   66  chmod u=r-x,g+w,o-x e.txt
+   67  useradd dev
+   68  su -dev
+   69  su - dev
+   70  cat /etc/passwd
+   71  passwd dev
+  
+   73  userdel -r dev
+   74  su - dev
+   75  groupadd DevOps
+   76  usermod -a -G Devops dev
+   
+   78  useradd dev
+   79  usermod -a -G DevOps dev
+  
+   81  cat /etc/group
+   82  gpasswd -d dev DevOps
+   83  groupdel DevOps
+   84  getent group screen
+   85  cd ..
+   86  ls
+   87  tar -cvf com.tar a.txt b.txt c.txt
+   88  ls
+   89  cp com.tar sample/
+   90  cd sample
+   91  ls
+   92  tar -xvf com.tar
+  
+   94  rm *
+   95  cd ..
+   
+   97  zip zip.zip a.txt b.txt
+   98  cp zip.zip sample/
+   99  cd sample
+  100  ls
+  101  unzip zip.zip
+  102  ls
+  103  rm *
+  104  cd ..
+  105  gzip a.txt
+  106  gzip -d a.txt
+  107  ls
+ 
+  110  rm *
+  111  ls
+    
+  113  rm -rf sample/
+   
+  115  ifconfig
+  116  ping google.com
+
+  119  traceroute google.com
+  120  nslookup  ec2-user
+  121   
+  123  netstat
+  124  netstat -tuln
+  125  ss -tuln
+  126  hostname
+  127  route -n
+  128  host www.flipkart.com
+  129  curl -o https://downloads.apache.org/tomcat/tomcat-9/v9.0.84/bin/apache-tomcat-9.0.84.tar.gz.asc
+  130 history
+
+
+
+
+
+
+  wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
+    2  ls
+    3  tar -zxvf apache-maven-3.9.6-bin.tar.gz
+    4  ls
+    5  mv apache-maven-3.9.6 Maven
+    6  cd bin/
+    7  cd Maven
+    8  cd bin/
+    9  pwd
+   10  cd
+   11  ls -a
+   12  vi .bashrc
+   13  source .bashrc
+   14  git init
+   15  yum install git -y
+   16  git init
+   17  wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
+   18  ls
+   19  tar -zxvf apache-maven-3.9.6-bin.tar.gz
+   20  ls
+   21  mv apache-maven-3.9.6 Maven
+   22  cd Maven
+   23  cd bin/
+   24  ls
+   25  pwd
+   26  cd
+   27  ls
+   28  ls -a
+   29  vi .bashrc
+   30  mvn --version
+   31  cd testfreshers
+   32  ls
+   33  cd target
+   34  ls
+   35  cd..
+   36  cd ..
+   37  ls
+   38  cd ..
+   39  ls
+   40  git init
+   41  git add .
+   42  git commite -m "pushing maven build"
+   43  git commit -m "pushing maven build"
+   44  git remote add origin https://github.com/balajigm292/maven.git
+   45  git remote -v
+   46  git push origin master
+   47  git config list
+   48  git config
+   49  git config --list
+   50  git config --global user.email "balajigm292@gmail.com"
+   51  git config --global user.name "balajigm292"
+   52  git push origin master
+   53  git login
+   54  git push origin master
+   55  git config --list
+   56  git push origin master
+   57  git clone https://github.com/balajigm292/maven.git/
+   58  git push origin master
+   59  ls
+   60  cd testfreshers
+   61  git remote add dev https://github.com/balajigm222/maven.git
+   62  git add .
+   63  git commit -m "pushing to github maven build"
+   64  git add .
+   65  git commit -m "pushing to github maven build"
+   66  git init
+   67  git add .
+   68  git commit -m "pushing to github maven build"
+   69  git push dev master
+   70  git rmote -v
+   71  git remote -v
+   72  git remote add dev https://github.com/balajigm222/maven.git
+   73  git remote -v
+   74  git push dev master
+   75  balajigm222
+   76  git push dev master 
+
+
+
+pipeline script jenkins
+
+ pipeline
+{
+     agent any
+     tools {
+         maven 'Maven'
+           }
+      stages {
+             stage('compile') {
+                    steps {
+                        sh 'mvn compile'
+                     }
+              }
+              stage('test') {
+                     steps {
+                             sh 'mvn test'
+                      }
+               }
+               stage('package') {
+                       steps {
+                               sh 'mvn package'
+                        }
+                }
+         }
+}  
+
+
+
+
+jen new
+
+  1  vi jen.sh
+    2  sh jen.sh
+    3  yum install java
+    4  systemctl start jenkins
+    5  cat /var/lib/jenkins/secrets/initialAdminPassword
+    6  ls
+    7  cd /var/lib/jenkins/
+    8  ls
+    9  cd /var/lib/
+   10  systemctl stop jenkins
+   11  cd /var/lib/
+   12  ls
+   13  rm -rf jenkins
+   14  ls
+   15  aws s3 cp s3://balajigm jenbackup.tar.gz
+   16  aws s3 cp s3://balajigm/jenbackup.tar.gz jenbackup.tar.gz
+   17  ls
+   18  tar -zxvf jenbackup.tar.gz -C /
+   19  systemctl start jenkins
+   20  exit
+   21  curl -sO http://43.205.143.172:8080/jnlpJars/agent.jar
+   22  java -jar agent.jar -jnlpUrl http://43.205.143.172:8080/computer/slave%2Djava%2Dnode/jenkins-agent.jnlp -secret 0d9210e4ec708d13043fc8939780504c5c13c3a58e68fc86322c85883317a541 -workDir "/home/ec2-user/build" &
+   23  curl -sO http://43.205.143.172:8080/jnlpJars/agent.jar
+   24  java -jar agent.jar -jnlpUrl http://43.205.143.172:8080/computer/slave%2Djava%2Dnode/jenkins-agent.jnlp -secret 0d9210e4ec708d13043fc8939780504c5c13c3a58e68fc86322c85883317a541 -workDir "/home/ec2-user/build"
+   25  cd /var/lib/jenkins
+   26  ls
+   27  cd ..
+   28  ls
+   29  history
+  1  vi jen.sh
+    2  sh jen.sh
+    3  yum install java
+    4  systemctl start jenkins
+    5  cat /var/lib/jenkins/secrets/initialAdminPassword
+    6  ls
+    7  cd /var/lib/jenkins/
+    8  ls
+    9  cd /var/lib/
+   10  systemctl stop jenkins
+   11  cd /var/lib/
+   12  ls
+   13  rm -rf jenkins
+   14  ls
+   15  aws s3 cp s3://balajigm jenbackup.tar.gz
+   16  aws s3 cp s3://balajigm/jenbackup.tar.gz jenbackup.tar.gz
+   17  ls
+   18  tar -zxvf jenbackup.tar.gz -C /
+   19  systemctl start jenkins
+   20  exit
+   21  curl -sO http://43.205.143.172:8080/jnlpJars/agent.jar
+   22  java -jar agent.jar -jnlpUrl http://43.205.143.172:8080/computer/slave%2Djava%2Dnode/jenkins-agent.jnlp -secret 0d9210e4ec708d13043fc8939780504c5c13c3a58e68fc86322c85883317a541 -workDir "/home/ec2-user/build" &
+   23  curl -sO http://43.205.143.172:8080/jnlpJars/agent.jar
+   24  java -jar agent.jar -jnlpUrl http://43.205.143.172:8080/computer/slave%2Djava%2Dnode/jenkins-agent.jnlp -secret 0d9210e4ec708d13043fc8939780504c5c13c3a58e68fc86322c85883317a541 -workDir "/home/ec2-user/build"
+   25  cd /var/lib/jenkins
+   26  ls
+   27  cd ..
+   28  ls
+   29  history
+ 
+slave instance
+
+  1  yum update -y
+    2  yum install java -y
+    3                                                                         java --version
+    4  curl -sO http://43.205.143.172:8080/jnlpJars/agent.jar
+    5  java -jar agent.jar -jnlpUrl http://43.205.143.172:8080/computer/slave%2Djava%2Dnode/jenkins-agent.jnlp -secret 0d9210e4ec708d13043fc8939780504c5c13c3a58e68fc86322c85883317a541 -workDir "/home/ec2-user/build" &
+    6  tar -zxvf jenbackup.tar.gz /var/lib/jenkins/
+    7  tar -zcvf jenbackup.tar.gz /var/lib/jenkins/
+    8  ls
+    9  rm -rf jenbackup.tar.gz
+   10  ls
+   11  tar -zcvf jenbackup.tar.gz /var/lib/jenkins/
+   12  ls
+   13  cd jenbackup.tar.gz
+   14  ls
+   15  ls jenbackup.tar.gz
+   16  ls jenkins
+   17  cat var/lib/jenkins
+   18  cat var/lib/jenkins/
+   19  cd var
+   20  var/lib/jenkins
+   21  ls
+   22  exit
+   23  curl -sO http://43.205.143.172:8080/jnlpJars/agent.jar
+   24  java -jar agent.jar -jnlpUrl http://43.205.143.172:8080/computer/slave%2Djava%2Dnode/jenkins-agent.jnlp -secret 0d9210e4ec708d13043fc8939780504c5c13c3a58e68fc86322c85883317a541 -workDir "/home/ec2-user/build" &
+   25  history
+
+master instance
+
+ vi jen.sh
+    2  sh jen.sh
+    3  yum install java -y
+    4  yum install git
+    5  systemctl start jenkins
+    6  cat /var/lib/jenkins/secrets/initialAdminPassword
+    7  ls
+    8  exit
+    9  java --version
+   10  java --version
+   11  history
+
+
+ansible master to worker node
+ansible demo -m ping
+   13  ansible demo -a "pwd"
+   14  ansible demo -a "ls -a"
+   15  ansible demo -a "uptime"
+   16  ansible demo -a "touch sample.conf"
+   17  ansible demo -a "ls"
+   18  ansible demo -a "rm -rf sample.conf"
+   19  ansible demo -a "ls"
+   20  ansible demo -a "yum install httpd -y"
+   21  ansible demo -a "sudo yum install httpd -y"
+   22  ansible demo -a "which httpd"
+   23  ansible demo -a "sudo which httpd"
+   24  ansible demo -a "systemctl status httpd"
+   25  ansible demo -a "sudo systemctl status httpd"
+   26  ansible demo -a "sudo yum remove  httpd -y"
+   27  ansible demo -b -a "which httpd"\
+   28  ansible demo -b -a "which httpd"
+   29  ansible demo -b -a "yum install httpd -y"
