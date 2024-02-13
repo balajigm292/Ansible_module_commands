@@ -360,7 +360,7 @@ LINUX COMMANDS
    94  rm *
    95  cd ..
    
-   97  zip zip.zip a.txt b.txt
+   
    98  cp zip.zip sample/
    99  cd sample
   100  ls
